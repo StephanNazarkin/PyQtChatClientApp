@@ -1,0 +1,9 @@
+send button
+("QPushButton{ border-radius: 15px;"
+                                      "background-image : url(design/code/Resources/send_mess.png);"
+                                      "background-repeat: no-repeat;"
+                                      "background-position: center;} "
+                                      "QPushButton:hover{background-image : url(design/code/Resources/send_mess_green.png); "
+                                      "background-repeat: no-repeat;"
+                                      "background-position: center;}"
+                                      "QPushButton:pressed{background-color: #d3d3d3;}")
