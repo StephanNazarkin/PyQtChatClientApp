@@ -1,7 +1,5 @@
 from Services.ChatroomService import ChatroomService
 from constants import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
 from Design.Code.contacts_window import *
 from Services.AccountService import AccountService
 from Services.MessageService import MessageService
@@ -45,7 +43,6 @@ class ContactsWindow(QtWidgets.QMainWindow):
         self.contactsWindow.blockedListWidget.itemClicked.connect(self.show_blocked)
 
     # Dragging a frameless window
-    # ==================================================================
     def center(self):
         qr = self.frameGeometry()
         center = QtWidgets.QDesktopWidget().availableGeometry().center()
@@ -130,4 +127,3 @@ class ContactsWindow(QtWidgets.QMainWindow):
         print(self.selectedUser['id'])
         print(account_service.delete_friend(self.selectedUser['id']))
         self.build_contacts()
-

@@ -1,5 +1,4 @@
 from Design.Code.edit_profile_window import *
-from Windows.registrationWindow import *
 from Windows.changePasswordWindow import *
 from Services.AccountService import AccountService
 import Windows.settingsWindow as sw
@@ -20,13 +19,11 @@ class EditProfileWindow(QtWidgets.QMainWindow):
 
         # Button handlers
         self.editProfileWindow.closeButton.clicked.connect(lambda: self.close())
-        self.editProfileWindow.cancelButton.clicked.connect(lambda: self.back())
+        self.editProfileWindow.cancelButton.clicked.connect(lambda: self.close())
         self.editProfileWindow.saveButton.clicked.connect(lambda: self.update_profile())
         self.editProfileWindow.changePasswordButton.clicked.connect(lambda: self.open_change_password_window())
-        #self.editProfileWindow.backButton.clicked.connect(lambda: self.back())
 
     # Dragging a frameless window
-    # ==================================================================
     def center(self):
         qr = self.frameGeometry()
         center = QtWidgets.QDesktopWidget().availableGeometry().center()
@@ -49,7 +46,11 @@ class EditProfileWindow(QtWidgets.QMainWindow):
         username = self.editProfileWindow.usernameLineEdit.text()
         email = self.editProfileWindow.emailLineEdit.text()
         print(username, email)
-        self.accountService.update_user(username, email)
+        if len(username) == 0 and len(email) == 0:
+            self.editProfileWindow.usernameLabel.setText('Please enter your new user name or email')
+        else:
+            self.editProfileWindow.usernameLabel.setText('User Name')
+            self.accountService.update_user(username, email)
 
     def open_change_password_window(self):
         change_password_window = ChangePasswordWindow(self)
@@ -58,10 +59,3 @@ class EditProfileWindow(QtWidgets.QMainWindow):
     def back(self):
         settings_window = sw.SettingsWindow(self)
         settings_window.close()
-
-
-
-
-
-
-

@@ -12,23 +12,23 @@ class AccountService(object):
         self.methodName = "Account/Register"
         self.url += self.methodName
         self.response = requests.post(self.url, json={'userName': user_name,
-                                                     'email': email,
-                                                     'password': password})
+                                                      'email': email,
+                                                      'password': password})
         return self.response
 
     def login_user(self, user_name, password):
         self.methodName = "Account/Login"
         self.url += self.methodName
         self.response = requests.post(self.url, json={'userName': user_name,
-                                                     'password': password})
+                                                      'password': password})
         return self.response
 
     def change_user_password(self, new_password, old_password):
         self.methodName = "Account/ChangePassword"
         self.url += self.methodName
         self.response = requests.post(self.url, headers=HEADERS, json={'id': USER_ID,
-                                                                      'oldPassword': old_password,
-                                                                      'newPassword': new_password})
+                                                                       'oldPassword': old_password,
+                                                                       'newPassword': new_password})
         return self.response
 
     def get_user_by_username(self, username):
@@ -77,6 +77,6 @@ class AccountService(object):
         self.methodName = "Account/UpdateUser"
         self.url += self.methodName
         self.response = requests.post(self.url, headers=HEADERS, json={'id': USER_ID,
-                                                                      'userName': user_name,
-                                                                      'email': email})
+                                                                       'userName': user_name,
+                                                                       'email': email})
         return self.response

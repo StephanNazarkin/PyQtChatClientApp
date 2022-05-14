@@ -1,11 +1,6 @@
 from Services.ChatroomService import ChatroomService
 from constants import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
 from Design.Code.create_chat_window import *
-from Services.AccountService import AccountService
-from Services.MessageService import MessageService
-import Windows.mainWindow as mw
 
 
 class CreateChatWindow(QtWidgets.QMainWindow):
@@ -32,7 +27,6 @@ class CreateChatWindow(QtWidgets.QMainWindow):
         self.createChatWindow.saveButton.clicked.connect(lambda: self.create_chat())
 
     # Dragging a frameless window
-    # ==================================================================
     def center(self):
         qr = self.frameGeometry()
         center = QtWidgets.QDesktopWidget().availableGeometry().center()
@@ -53,7 +47,9 @@ class CreateChatWindow(QtWidgets.QMainWindow):
     def create_chat(self):
         chat_service = ChatroomService()
         topic = self.createChatWindow.chatNameLineEdit.text()
-        response = chat_service.create_chatroom(topic, USER_ID)
-        main_window = mw.MainWindow()
-        main_window.build_chats()
-        print(response)
+        if len(topic) == 0:
+            self.createChatWindow.chatNameLabel.setText("Chat name can't be empty")
+        else:
+            self.createChatWindow.chatNameLabel.setText("Chat Name")
+            response = chat_service.create_chatroom(topic, USER_ID)
+            print(response)

@@ -121,7 +121,7 @@ class CreateChat(object):
         self.saveButton.setIconSize(QtCore.QSize(30, 30))
         self.saveButton.setObjectName("saveButton")
         self.chatNameLabel = QtWidgets.QLabel(self.frame)
-        self.chatNameLabel.setGeometry(QtCore.QRect(16, 48, 71, 21))
+        self.chatNameLabel.setGeometry(QtCore.QRect(16, 48, 301, 21))
         font = QtGui.QFont()
         font.setFamily("Noto Naskh Arabic UI")
         font.setPointSize(10)

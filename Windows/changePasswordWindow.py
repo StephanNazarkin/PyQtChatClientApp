@@ -24,7 +24,6 @@ class ChangePasswordWindow(QtWidgets.QDialog):
         self.changePasswordWindow.saveButton.clicked.connect(lambda: self.change_password())
 
     # Dragging a frameless window
-    # ==================================================================
     def center(self):
         qr = self.frameGeometry()
         center = QtWidgets.QDesktopWidget().availableGeometry().center()
@@ -45,4 +44,13 @@ class ChangePasswordWindow(QtWidgets.QDialog):
     def change_password(self):
         old_password = self.changePasswordWindow.oldPasswordLineEdit.text()
         new_password = self.changePasswordWindow.newPasswordLineEdit.text()
-        print(self.accountService.change_user_password(old_password, new_password))
+        if len(old_password) != 0 and len(new_password) != 0:
+            print(self.accountService.change_user_password(old_password, new_password))
+        if len(old_password) == 0:
+            self.changePasswordWindow.oldPasswordLabel.setText('''Your old password can't be empty''')
+        if len(old_password) != 0:
+            self.changePasswordWindow.oldPasswordLabel.setText('''Old Password''')
+        if len(new_password) == 0:
+            self.changePasswordWindow.newPasswordLabel.setText('''Your new password can't be empty''')
+        if len(new_password) != 0:
+            self.changePasswordWindow.newPasswordLabel.setText('''New Password''')

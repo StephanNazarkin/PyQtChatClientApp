@@ -139,7 +139,7 @@ class EditProfile(object):
         self.saveButton.setIconSize(QtCore.QSize(30, 30))
         self.saveButton.setObjectName("saveButton")
         self.usernameLabel = QtWidgets.QLabel(self.frame)
-        self.usernameLabel.setGeometry(QtCore.QRect(16, 48, 71, 21))
+        self.usernameLabel.setGeometry(QtCore.QRect(16, 48, 301, 21))
         font = QtGui.QFont()
         font.setFamily("Noto Naskh Arabic UI")
         font.setPointSize(10)

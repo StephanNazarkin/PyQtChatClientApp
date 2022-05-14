@@ -21,6 +21,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.chatDict = {}
         self.currentChatId = ''
 
+        self.mainWindow.removeButton.hide()
+
         self.build_chats()
 
         '''self.timer = QTimer()
@@ -33,8 +35,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.center()
 
-        #self.mainWindow.userNameLabel.set
-
         # Button handlers
         self.mainWindow.closeButton.clicked.connect(lambda: self.close())
         self.mainWindow.minimizeButton.clicked.connect(lambda: self.showMinimized())
@@ -42,11 +42,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.mainWindow.attachButton.clicked.connect(lambda: self.attach())
         self.mainWindow.settingsButton.clicked.connect(lambda: self.open_settings_window())
         self.mainWindow.refreshButton.clicked.connect(lambda: self.build_chats())
+        self.mainWindow.removeButton.clicked.connect(lambda: self.delete_chat())
+        self.mainWindow.addToChatButton.clicked.connect(lambda: self.open_chat_members_window())
 
         self.mainWindow.chatListWidget.itemClicked.connect(self.get_messages)
 
     # Dragging a frameless window
-    # ==================================================================
     def center(self):
         qr = self.frameGeometry()
         center = QtWidgets.QDesktopWidget().availableGeometry().center()
@@ -67,20 +68,20 @@ class MainWindow(QtWidgets.QMainWindow):
     def send_message(self):
         message_text = self.mainWindow.messageTextEdit.toPlainText()
         print(message_text)
-        messageService = MessageService()
-        messageService.send_message(self.currentChatId, USER_ID, message_text)
-        print(self.currentChatId)
-        self.mainWindow.messageTextEdit.clear()
-        print("Adding a label")
-        item = QtWidgets.QListWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignRight)
-        item.setText(f"{USER_NAME} (You):\n{message_text}")
-        self.mainWindow.messageListWidget.addItem(item)
-
+        message_service = MessageService()
+        if len(message_text) != 0:
+            message_service.send_message(self.currentChatId, USER_ID, message_text)
+            print(self.currentChatId)
+            self.mainWindow.messageTextEdit.clear()
+            item = QtWidgets.QListWidgetItem()
+            item.setTextAlignment(QtCore.Qt.AlignRight)
+            item.setText(f"{USER_NAME} (You):\n{message_text}")
+            self.mainWindow.messageListWidget.addItem(item)
+        else:
+            pass
 
     def attach(self):
-        path = QFileDialog.getOpenFileName(self, 'Open a file', '',
-                                        'All Files (*.*)')
+        path = QFileDialog.getOpenFileName(self, 'Open a file', '', 'All Files (*.*)')
         if path != ('', ''):
             print(path[0])
         print(path)
@@ -106,12 +107,18 @@ class MainWindow(QtWidgets.QMainWindow):
             item.setTextAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignBottom)
             item.setText(topic['topic'])
             self.mainWindow.chatListWidget.addItem(item)
-        #print(self.chatDict)
 
     def get_messages(self, item):
-        self.mainWindow.addToChatButton.clicked.connect(lambda: self.open_chat_members_window())
         self.mainWindow.chatLabel.setText(item.text())
         self.currentChatId = self.chatDict[item.text()]
+        chat_serv = ChatroomService()
+        response = chat_serv.get_owner(self.currentChatId)
+        owner = response.json()['user']['userName']
+        print(owner)
+        if USER_NAME == owner:
+            self.mainWindow.removeButton.show()
+        else:
+            self.mainWindow.removeButton.hide()
         ms = MessageService()
         res = ms.get_messages_from_chat(self.chatDict[item.text()])
         message_dict = {}
@@ -140,4 +147,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def open_chat_members_window(self):
         chat_members_window = ChatMembersWindow(self.currentChatId)
+        print('error')
         chat_members_window.show()
+
+    def delete_chat(self):
+        chat_service = ChatroomService()
+        print(chat_service.delete_chatroom(self.currentChatId))

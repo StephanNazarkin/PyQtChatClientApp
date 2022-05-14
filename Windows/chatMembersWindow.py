@@ -1,8 +1,5 @@
 from Services.ChatroomService import ChatroomService
-from Windows.settingsWindow import SettingsWindow
 from constants import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
 from Design.Code.chat_members_window import *
 from Services.AccountService import AccountService
 from Services.MessageService import MessageService
@@ -65,7 +62,6 @@ class ChatMembersWindow(QtWidgets.QMainWindow):
         self.membersWindow.contactsListWidget.clicked.connect(lambda: self.select_contact())
 
     # Dragging a frameless window
-    # ==================================================================
     def center(self):
         qr = self.frameGeometry()
         center = QtWidgets.QDesktopWidget().availableGeometry().center()
@@ -205,5 +201,3 @@ class ChatMembersWindow(QtWidgets.QMainWindow):
         response = chat_service.kick_user(self.selectedAccountId)
         self.build_members()
         print(response.text)
-
-

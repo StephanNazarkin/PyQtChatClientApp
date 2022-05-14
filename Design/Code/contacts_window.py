@@ -391,5 +391,5 @@ class Contacts(object):
         self.closeButton_3.setText(_translate("Form", "Close"))
         self.addContactButton.setText(_translate("Form", "Add Contact"))
         self.searchLineEdit.setPlaceholderText(_translate("Form", "Search"))
-        self.usernameLabel.setText(_translate("Form", "USERNAME"))
+        self.usernameLabel.setText(_translate("Form", ""))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.SearchTab), _translate("Form", "Search"))

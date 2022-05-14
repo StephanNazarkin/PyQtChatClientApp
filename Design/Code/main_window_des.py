@@ -136,6 +136,17 @@ class MainChatWindow(object):
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
+        self.removeButton = QtWidgets.QPushButton(self.frame_2)
+        self.removeButton.setGeometry(QtCore.QRect(540, 12, 40, 40))
+        self.removeButton.setStyleSheet("""QPushButton{border-radius: 7px;
+                                             background-image : url(Windows/Resources/remove.png);
+                                             background-repeat: no-repeat;
+                                             background-position: center;}
+                                             QPushButton:hover{background-image : url(Windows/Resources/remove_hover.png);
+                                             background-repeat: no-repeat;
+                                             background-position: center;}""")
+        self.removeButton.setText("")
+        self.removeButton.setObjectName("removeButton")
         self.refreshButton = QtWidgets.QPushButton(self.frame_2)
         self.refreshButton.setGeometry(QtCore.QRect(590, 12, 40, 40))
         self.refreshButton.setStyleSheet("""QPushButton{border-radius: 7px;
