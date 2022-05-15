@@ -1,10 +1,11 @@
 import json
 import os
-
+import re
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from Design.Code.registration import *
+import Windows.loginWindow as lWindow
 
 from Services.AccountService import AccountService
 
@@ -14,7 +15,6 @@ class RegistrationWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         self._translate = QtCore.QCoreApplication.translate
         QtWidgets.QWidget.__init__(self, parent)
-        self.accountService = AccountService()
         self.registrationWindow = Registration()
         self.registrationWindow.setupUi(self)
 
@@ -27,6 +27,7 @@ class RegistrationWindow(QtWidgets.QMainWindow):
         self.registrationWindow.closeButton.clicked.connect(lambda: self.close())
         self.registrationWindow.minimizeButton.clicked.connect(lambda: self.showMinimized())
         self.registrationWindow.registerButton.clicked.connect(lambda: self.register())
+        self.registrationWindow.loginButton.clicked.connect(lambda: self.show_login_window())
 
 
     # Dragging a frameless window
@@ -52,16 +53,31 @@ class RegistrationWindow(QtWidgets.QMainWindow):
     # Register user
     def register(self):
         username = self.registrationWindow.usernameLineEdit.text()
-        email = self.registrationWindow.emailLineEdit.text(0)
+        email = self.registrationWindow.emailLineEdit.text()
         password = self.registrationWindow.passwordLineEdit.text()
         #self.accountService.login_user(username, password)
 
-        if len(password) > 8 and len(username) != 0:
-            response = self.accountService.login_user(username, password)
-            with open(os.path.join("data", "config.json"), "w") as file:
-                data = {"username": username, "token": response['token']}
-                json.dump(data, file, indent=6)
+        EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
-        else:
-            message = "Incorrect username or password"
+        if len(email) == 0 or len(password) < 8 or len(username) == 0:
+            print("error")
+            message = "Incorrect username, email or password"
             QtWidgets.QMessageBox.about(self, "Error", message)
+
+        elif len(password) >= 8 and len(username) != 0:
+            print('OK')
+            account_service = AccountService()
+            response = account_service.register_user(username, email, password)
+            if response.status_code != 200:
+                message = "Check the entered data"
+                QtWidgets.QMessageBox.about(self, "Error", message)
+            else:
+                self.close()
+                login_window = lWindow.LoginWindow()
+                login_window.show()
+            print(response.status_code)
+
+    def show_login_window(self):
+        self.close()
+        login_window = lWindow.LoginWindow()
+        login_window.show()

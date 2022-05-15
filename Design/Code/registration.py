@@ -64,7 +64,7 @@ class Registration(object):
                                                border-radius: 1px; padding: 0% 10%;}''')
         self.passwordLineEdit.setObjectName("lineEdit_5")
         self.registerButton = QtWidgets.QPushButton(self.frame_2)
-        self.registerButton.setGeometry(QtCore.QRect(134, 290, 91, 41))
+        self.registerButton.setGeometry(QtCore.QRect(134, 270, 91, 41))
         font = QtGui.QFont()
         font.setFamily("Noto Naskh Arabic UI")
         font.setPointSize(12)
@@ -77,6 +77,19 @@ class Registration(object):
                                       background-position: center;
                                       background-color: #45357a;}''')
         self.registerButton.setObjectName("pushButton_15")
+        self.loginButton = QtWidgets.QPushButton(self.frame_2)
+        self.loginButton.setGeometry(QtCore.QRect(145, 320, 65, 23))
+        font = QtGui.QFont()
+        font.setFamily("Noto Naskh Arabic UI")
+        font.setPointSize(9)
+        self.loginButton.setFont(font)
+        self.loginButton.setStyleSheet('''QPushButton{border-radius: 7px;
+                                                     color: #6538b9;}
+                                                     QPushButton:hover{
+                                                     color: #45357a;}
+                                                     }''')
+        self.loginButton.setObjectName("pushButton")
+
         self.usernameLabel = QtWidgets.QLabel(self.frame_2)
         self.usernameLabel.setGeometry(QtCore.QRect(50, 70, 111, 21))
         font = QtGui.QFont()
@@ -168,6 +181,7 @@ class Registration(object):
         self.emailLineEdit.setPlaceholderText(_translate("MainWindow", "Enter your email"))
         self.passwordLineEdit.setPlaceholderText(_translate("MainWindow", "Password"))
         self.registerButton.setText(_translate("MainWindow", "Sign Up"))
+        self.loginButton.setText(_translate("MainWindow", "Or sign in"))
         self.usernameLabel.setText(_translate("MainWindow", "Max 25 characters"))
         self.passwordLabel.setText(_translate("MainWindow", "Min 8 characters"))
         self.registrationLabel.setText(_translate("MainWindow", "Registration"))

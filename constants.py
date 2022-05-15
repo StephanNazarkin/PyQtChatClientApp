@@ -8,6 +8,9 @@ HOST = "localhost:"
 PORT = 32844
 REQUEST_URL = "http://{host}{port}/".format(host=HOST, port=PORT)
 RESOURCES_PATH = "Windows\\Resources\\"
+USER_ID = ''
+USER_NAME = ''
+HEADERS = {}
 
 CONFIG_PATH = 'data/config.json'
 if os.path.getsize(CONFIG_PATH) > 0:
@@ -21,18 +24,3 @@ if os.path.getsize(CONFIG_PATH) > 0:
                    "Authorization": "Bearer {token}".format(token=user_data['token'])}
 else:
     print("file is empty")
-
-
-CURRENT_USER_MESSAGE_STYLE = '''QListWidget{
-                                background-color: rgb(235, 234, 253);
-                                border: none;}
-                                QListWidget::item:hover{
-                                background-color: rgb(235, 234, 233);
-                                border: none;}
-                                QListWidget::item:active{
-                                background-color: rgb(123, 2, 233);
-                                border: none;
-                                color: black}
-                                QListView {
-                                outline: 0;
-                                }'''
